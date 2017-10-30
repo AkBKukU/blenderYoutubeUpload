@@ -7,11 +7,11 @@ This is a add-on for Blender that allows you upload videos to Youtube directly f
 Installing Dependencies
 -----------------------
 
-You will need to install google-api-python-client with pip so blender can use the Youtube API
+You will need to install `google-api-python-client` with pip so blender can use the Youtube API
 
 1. Download https://bootstrap.pypa.io/get-pip.py 
-2. Run get-pip.py with the version of python blender is using. Likely "sudo python3 ./get-pip.py"
-3. Use that pip install to install google-api-python-client. Likely "sudo pip3 install google-api-python-client"
+2. Run get-pip.py with the version of python blender is using. Likely `sudo python3 ./get-pip.py`
+3. Use that pip install to install google-api-python-client. Likely `sudo pip3 install google-api-python-client`
 
 
 Installing Add-On
