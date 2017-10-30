@@ -48,5 +48,5 @@ Known Issues
 Screenshots
 -----------
 
-![Upload Panel UI]https://raw.githubusercontent.com/AkBKukU/blenderYoutubeUpload/master/doc/img/2017-10-30_Panel.png
-![User Prefs UI]https://raw.githubusercontent.com/AkBKukU/blenderYoutubeUpload/master/doc/img/2017-10-30_UserPrefs.png
+![Upload Panel UI](https://raw.githubusercontent.com/AkBKukU/blenderYoutubeUpload/master/doc/img/2017-10-30_Panel.png)
+![User Prefs UI](https://raw.githubusercontent.com/AkBKukU/blenderYoutubeUpload/master/doc/img/2017-10-30_UserPrefs.png)
