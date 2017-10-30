@@ -44,6 +44,10 @@ Known Issues
 ------------
 
  - Progress bar only redraws when you hover back and forth over it
+   - Solution: Find redraw operator for panel and call it from the progress bar update function
+
+ - Description can only be a single line.
+   - Solution: Description will have to be in a text block. There is currently [no way](https://blender.stackexchange.com/questions/91762/change-size-of-stringproperty-text-input) to do a multi-line text field. 
 
 Screenshots
 -----------
