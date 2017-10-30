@@ -44,3 +44,9 @@ Known Issues
 ------------
 
  - Progress bar only redraws when you hover back and forth over it
+
+Screenshots
+-----------
+
+![Upload Panel UI]https://raw.githubusercontent.com/AkBKukU/blenderYoutubeUpload/master/doc/img/2017-10-30_Panel.png
+![User Prefs UI]https://raw.githubusercontent.com/AkBKukU/blenderYoutubeUpload/master/doc/img/2017-10-30_UserPrefs.png
