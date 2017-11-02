@@ -1,3 +1,9 @@
 *client_secret.json*
 *client_secrets.json*
 *oath2.json*
+*token.json*
+*.avi*
+*.jpg*
+
+*__pycache__*
+*.swp
