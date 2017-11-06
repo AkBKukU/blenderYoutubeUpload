@@ -1,0 +1,38 @@
+#!/usr/bin/python
+
+"""
+Packaging Utility
+
+Creates a zip file to be installed in Blender
+
+"""
+
+import os
+import sys
+import zipfile
+
+import bl_info from YouTubeUpload
+
+
+cwd = os.getcwd()
+SOURCE_DIR="src"
+OUTPUT_DIR="built"
+
+# Get location of source directory
+if os.path.basename(cwd) == SOURCE_DIR:
+    src_path=cwd
+    out_path=cwd + "/../" + OUTPUT_DIR
+elif os.path.isdir(cwd + "/" + SOURCE_DIR):
+    src_path=cwd+"/" + SOURCE_DIR
+    out_path=cwd+"/" + OUTPUT_DIR
+elif os.path.isdir(cwd + "/../" + SOURCE_DIR):
+    src_path=cwd + "/../" + SOURCE_DIR
+    out_path=cwd + "/../" + OUTPUT_DIR
+else:
+    print("Source directory \"" + SOURCE_DIR + "\" not found.")
+    sys.exit(1)
+
+for dirname, subdirs, files in os.walk(src_path):
+    for filename in files:
+        if filename.endswith(".py"):
+            print("Adding to Zip: " + filename)
