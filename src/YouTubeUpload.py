@@ -90,7 +90,7 @@ def initialize_upload(youtube):
 
     body=dict(
         snippet=dict(
-            title=scene.youtube_upload.non_video_title,
+            title=scene.youtube_upload.video_title,
             description=scene.youtube_upload.video_description,
             tags=tags,
             categoryId=22
@@ -110,7 +110,7 @@ def initialize_upload(youtube):
             resumable=True
 	)
     )
-    print("Title: %s" % (scene.youtube_upload.non_video_title))
+    print("Title: %s" % (scene.youtube_upload.video_title))
     #resumable_upload(insert_request)
 
 
@@ -170,8 +170,6 @@ def upload_begin():
     scene.youtube_upload.video_upload_progress = 0
 
     youtube = get_authenticated_service()
-
-    set_non_properties(None)
 
     if scene.youtube_upload.upload_file_use_render == True:
         scene.youtube_upload.upload_video_path = scene.render.filepath
@@ -255,14 +253,7 @@ class YoutubeProperties(bpy.types.PropertyGroup):
     video_id = bpy.props.StringProperty(
         name="Video ID", default="")
 
-    def title(self,value):
-        self.non_video_title = value
-
-@persistent
-def set_non_properties(self):
-    scene = bpy.context.scene
-    scene.youtube_upload.title(scene.youtube_upload.video_title)
-    
+   
 class YoutubePanel(bpy.types.Panel):
     '''Properties panel to configure video information and start upload'''
     bl_idname = "RENDER_PT_youtube_upload"
@@ -319,8 +310,6 @@ def register():
     
     bpy.types.Scene.youtube_upload = \
         bpy.props.PointerProperty(type=YoutubeProperties)
-
-    bpy.app.handlers.save_pre.append(set_non_properties)
 
 
 def unregister():
