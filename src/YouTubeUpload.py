@@ -20,6 +20,7 @@ import threading
 
 # blender
 import bpy
+from bpy.app.handlers import persistent
 
 # google
 from apiclient.discovery import build
@@ -89,7 +90,7 @@ def initialize_upload(youtube):
 
     body=dict(
         snippet=dict(
-            title=scene.youtube_upload.video_title,
+            title=scene.youtube_upload.non_video_title,
             description=scene.youtube_upload.video_description,
             tags=tags,
             categoryId=22
@@ -109,7 +110,8 @@ def initialize_upload(youtube):
             resumable=True
 	)
     )
-    resumable_upload(insert_request)
+    print("Title: %s" % (scene.youtube_upload.non_video_title))
+    #resumable_upload(insert_request)
 
 
 # This method implements an exponential backoff strategy to resume a
@@ -165,10 +167,14 @@ def resumable_upload(insert_request):
 
 def upload_begin():
     scene = bpy.context.scene
-    load_video_path = scene.render.filepath
     scene.youtube_upload.video_upload_progress = 0
 
     youtube = get_authenticated_service()
+
+    set_non_properties(None)
+
+    if scene.youtube_upload.upload_file_use_render == True:
+        scene.youtube_upload.upload_video_path = scene.render.filepath
 
     try:
         initialize_upload(youtube)
@@ -184,6 +190,13 @@ def upload_thumbnail(youtube):
         videoId=scene.youtube_upload.video_id,
         media_body=bpy.path.abspath(scene.youtube_upload.upload_thumbnail_path)
     ).execute()
+
+
+# Reset thread count to max when all is selected
+def uiupdate(self,context):
+    scene = context.scene
+    if scene.youtube_upload.upload_file_use_render == True:
+        scene.youtube_upload.upload_video_path = scene.render.filepath
 
 
 class YoutubeKeyLink(bpy.types.Operator):
@@ -229,7 +242,7 @@ class YoutubeProperties(bpy.types.PropertyGroup):
     upload_thumbnail_path = bpy.props.StringProperty(
         name="Thumbnail", subtype="FILE_PATH")
     upload_file_use_render = bpy.props.BoolProperty(
-        name="Use Video Render Path", default=True)
+        name="Use Video Render Path", default=True, update=uiupdate)
     upload_progress = bpy.props.FloatProperty(
         name = "Upload Progress", default=0,min=0,max=100,subtype="PERCENTAGE")
     
@@ -241,7 +254,14 @@ class YoutubeProperties(bpy.types.PropertyGroup):
         items=privacy_options, name = "Privacy", default="unlisted")
     video_id = bpy.props.StringProperty(
         name="Video ID", default="")
-    
+
+    def title(self,value):
+        self.non_video_title = value
+
+@persistent
+def set_non_properties(self):
+    scene = bpy.context.scene
+    scene.youtube_upload.title(scene.youtube_upload.video_title)
     
 class YoutubePanel(bpy.types.Panel):
     '''Properties panel to configure video information and start upload'''
@@ -299,6 +319,8 @@ def register():
     
     bpy.types.Scene.youtube_upload = \
         bpy.props.PointerProperty(type=YoutubeProperties)
+
+    bpy.app.handlers.save_pre.append(set_non_properties)
 
 
 def unregister():
