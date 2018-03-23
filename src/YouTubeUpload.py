@@ -111,7 +111,7 @@ def initialize_upload(youtube):
 	)
     )
     print("Title: %s" % (scene.youtube_upload.video_title))
-    #resumable_upload(insert_request)
+    resumable_upload(insert_request)
 
 
 # This method implements an exponential backoff strategy to resume a
